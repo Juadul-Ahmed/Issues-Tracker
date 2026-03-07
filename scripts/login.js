@@ -16,5 +16,4 @@ document.getElementById('login-btn')
       alert("Sig In Failed");
       return;
     }
-    
   })
