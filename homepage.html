@@ -32,23 +32,19 @@
   <body class="bg-[#F8FAFC] min-h-screen"> 
    
     <nav>
-      <div class="navbar bg-base-100 shadow-sm">
-  <div class="flex-1">
-    <div class="flex ml-20">
-    <img class="w-10" src="assets/github-logo.png" alt="">
-    <a  class="btn btn-ghost text-xl">GitHub Issues Tracker</a>
+     <div class="navbar bg-base-100 shadow-sm flex flex-col md:flex-row items-center justify-between px-4 py-2">
+    <!-- Logo + Title -->
+    <div class="flex items-center w-full md:w-auto mb-2 md:mb-0">
+      <img class="w-10 mr-2" src="assets/github-logo.png" alt="GitHub Logo">
+      <a class="btn btn-ghost text-xl p-0 normal-case">GitHub Issues Tracker</a>
     </div>
-  </div>
-  <div class="flex gap-2 mr-20">
-    <input id="input-search" type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-    <div class="dropdown dropdown-end">
-      <button id="btn-search" class="btn btn-primary">
-          Search
-      </button>
 
+    <!-- Search -->
+    <div class="flex w-full md:w-auto items-center gap-2">
+      <input id="input-search" type="text" placeholder="Search" class="input input-bordered w-40 md:w-40" />
+      <button id="btn-search" class="btn btn-primary w-30 md:w-40">Search</button>
     </div>
   </div>
-</div>
     </nav>
 
       <section class="w-11/12 bg-white mx-auto mt-10 shadow-sm rounded-md">
