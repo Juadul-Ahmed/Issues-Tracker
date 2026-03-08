@@ -71,7 +71,8 @@ function displayIssues(issueObj) {
   issues.forEach(issue => {
     const statusColor = issue.status.toLowerCase() === 'open' ? 'bg-emerald-500' : 'bg-purple-500'; 
     const card = document.createElement("div");
-    card.className = 'card bg-base-100 shadow-sm border border-gray-100 rounded-md overflow-hidden flex flex-col justify-between';
+    card.className = 'card bg-base-100 shadow-sm border border-gray-100 rounded-md overflow-hidden flex flex-col justify-between cursor-pointer';
+     card.onclick = () => loadCardDetail(issue.id);
     card.innerHTML = `
     <div class="h-1.5 ${statusColor} w-full"></div>
       <div class="p-4 flex flex-col gap-3">
@@ -125,8 +126,73 @@ function updateIssueCount(issueObj) {
   const issueCount = document.getElementById("issue-count");
   const issues = issueObj.data;
   issueCount.textContent = `${issues.length} issues`;
+};
+
+
+
+
+const loadCardDetail = async (id) => {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  displayCardDetails(details.data);
+}
+const displayCardDetails = (issue) => {
+  console.log(issue);
+  const detailsBox = document.getElementById('details-container');
+  detailsBox.innerHTML = `
+  
+       <h2 class="text-2xl font-bold text-gray-800">
+      ${issue.title}
+    </h2>
+
+    
+    <div class="flex items-center gap-3 mt-3 text-sm text-gray-500">
+     <span class="badge ${issue.status.toLowerCase() === 'open' ? 'badge-success' : 'bg-purple-500 text-white'} text-white px-3 py-2">
+          ${issue.status}
+      </span>
+      <span>•</span>
+      <span>Opened by <b>${issue.author}</b></span>
+      <span>•</span>
+      <span>${issue.createdAt}</span>
+    </div>
+
+    
+    <div class="flex gap-2 mt-4">
+      <span class="badge badge-outline border-red-300 text-red-500">BUG</span>
+      <span class="badge badge-outline border-orange-300 text-orange-500">HELP WANTED</span>
+    </div>
+
+    
+    <p class="mt-6 text-gray-600 leading-relaxed">
+      ${issue.description}
+    </p>
+
+    
+    <div class="grid grid-cols-2 gap-6 mt-8 bg-base-200 p-6 rounded-xl">
+
+      <div>
+        <p class="text-sm text-gray-500">Assignee:</p>
+        <p class="font-semibold text-gray-800 mt-1">${issue.author}</p>
+      </div>
+
+      <div>
+        <p class="text-sm text-gray-500">Priority:</p>
+       <span class="badge ${getPriorityColor(issue.priority)} mt-1">${issue.priority}</span>
+      </div>
+
+    </div>
+  
+  `;
+  document.getElementById('my_modal_5').showModal()
 }
 
-;
+
+
+
+
+
+
+
 loadIssues();
 
