@@ -1,12 +1,13 @@
-
-
-
 const issueContainer = document.getElementById('issue-container');
+
+
 
 async function loadIssues() {
   try {
     const res = await fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues');
     const data = await res.json();
+    allIssues = data.data;
+
     displayIssues(data);
   } catch (error) {
     console.error("Error fetching issues:", error);
@@ -14,7 +15,60 @@ async function loadIssues() {
   }
 }
 
+ 
+  function handleIssueFilters() {
+
+  const allBtn = document.getElementById("all-btn");
+  const openBtn = document.getElementById("open-btn");
+  const closedBtn = document.getElementById("closed-btn");
+
+  allBtn.addEventListener("click", () => {
+    displayIssues({ data: allIssues });
+    setActiveButton(allBtn)
+  });
+
+  openBtn.addEventListener("click", () => {
+    const openIssues = allIssues.filter(issue => issue.status.toLowerCase() === "open");
+    displayIssues({ data: openIssues });
+    setActiveButton(openBtn);
+  });
+
+  closedBtn.addEventListener("click", () => {
+    const closedIssues = allIssues.filter(issue => issue.status.toLowerCase() === "closed");
+    displayIssues({ data: closedIssues });
+    setActiveButton(closedBtn);
+  });
+
+}
+
+
+ 
+
+ 
+  function setActiveButton(activeBtn) {
+
+  const allBtn = document.getElementById("all-btn");
+  const openBtn = document.getElementById("open-btn");
+  const closedBtn = document.getElementById("closed-btn");
+
+  const buttons = [allBtn, openBtn, closedBtn];
+
+  buttons.forEach(btn => {
+    btn.classList.remove("btn-primary");
+  });
+
+  activeBtn.classList.add("btn-primary");
+}
+ 
+  handleIssueFilters();
+
+
+
+
 function displayIssues(issueObj) {
+  
+    updateIssueCount(issueObj);
+
   const issues = issueObj.data; 
   issueContainer.innerHTML = ''; 
   
@@ -66,7 +120,15 @@ function getStatusIcon(status) {
   const s = status.toLowerCase(); 
   if (s === 'open') return 'assets/Open-Status.png';
   if (s === 'closed') return 'assets/Closed-Status .png';
-  return 'assets/Unknown-Status.png'; 
+ 
+}
+
+
+
+function updateIssueCount(issueObj) {
+  const issueCount = document.getElementById("issue-count");
+  const issues = issueObj.data;
+  issueCount.textContent = `${issues.length} issues`;
 }
 
 
