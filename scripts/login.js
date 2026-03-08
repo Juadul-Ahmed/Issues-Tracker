@@ -13,7 +13,7 @@ document.getElementById('login-btn')
 
       window.location.assign("/homepage.html")
     }else{
-      alert("Sig In Failed");
+      alert("Sign In Failed");
       return;
     }
   })

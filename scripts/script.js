@@ -42,9 +42,6 @@ async function loadIssues() {
 }
 
 
- 
-
- 
   function setActiveButton(activeBtn) {
 
   const allBtn = document.getElementById("all-btn");
@@ -61,7 +58,6 @@ async function loadIssues() {
 }
  
   handleIssueFilters();
-
 
 
 
@@ -131,6 +127,6 @@ function updateIssueCount(issueObj) {
   issueCount.textContent = `${issues.length} issues`;
 }
 
-
+;
 loadIssues();
 
