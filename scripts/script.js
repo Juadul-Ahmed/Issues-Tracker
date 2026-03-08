@@ -129,8 +129,6 @@ function updateIssueCount(issueObj) {
 };
 
 
-
-
 const loadCardDetail = async (id) => {
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
   const res = await fetch(url);
@@ -189,10 +187,26 @@ const displayCardDetails = (issue) => {
 
 
 
-
-
-
-
-
 loadIssues();
 
+document.getElementById('btn-search')
+  .addEventListener('click', () =>{
+    const input = document.getElementById('input-search');
+    const searchValue = input.value.trim().toLowerCase();
+    console.log(searchValue)
+
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const allSearch = data.data;
+        console.log(allSearch);
+        const filterSearch = allSearch.filter((issue) => 
+         issue.title.toLowerCase().includes(searchValue)
+      
+      )
+      // console.log(filterSearch);
+      displayIssues({ data: filterSearch });
+      
+      })
+
+  })
